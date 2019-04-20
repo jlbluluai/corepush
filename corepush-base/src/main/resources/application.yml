@@ -1,0 +1,29 @@
+ftp:
+  host: 127.0.0.1
+  port: 21
+  timeout: 20000
+  username: anonymous
+  password:
+
+file:
+  download-file: /root/download/
+  upload-file: /root/upload/
+  temp-file: /root/temp/
+
+nginx:
+  ip: 127.0.0.1
+  port: 8088
+
+spring:
+  mail:
+    host: smtp.qq.com
+    username: 981378964@qq.com
+    password: emzbcblhyghmbfga
+    protocol: smtp
+    default-encoding: UTF-8
+    
+online:
+  day:
+    during: 
+      weather:  08:00:00
+

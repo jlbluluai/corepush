@@ -1,0 +1,35 @@
+bin/
+build/
+classes/
+target/
+.DS_Store
+
+# office临时文件
+~*.docx
+~*.xlsx
+
+# 临时文件
+*.tmp
+
+# 日志相关
+logs/
+*.log
+*.debug.zip
+*.error.zip
+
+# Eclipse项目配置文件
+.project
+.classpath
+.settings/
+.externalToolBuilders/
+
+.springBeans
+
+# TestNG测试输出目录
+test-output/
+
+# IDEA配置文件
+.idea/
+*.iml
+
+
