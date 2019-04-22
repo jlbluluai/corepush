@@ -1,10 +1,14 @@
 package com.xyz.core.push.execute.infoq;
 
+import com.xyz.core.push.util.DateUtil;
 import com.xyz.core.push.util.HttpUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.springframework.stereotype.Component;
 import org.xml.sax.InputSource;
 
 import java.io.IOException;
@@ -13,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * InfoQ RSS订阅推送
@@ -20,16 +25,21 @@ import java.util.List;
  * @author xyz
  * @date 2019/4/20
  */
+@Component
+@Slf4j
 public class InfoQPush {
 
     // 是否启用InfoQ推送的开关（未实现）
     private static boolean flag = true;
 
     // InfoQ推送需要读取的文件目录的统一地址
-    private final String filepath = "file/infoq/";
+    private static String filepath = "file/infoq/";
 
     //RSS订阅的地址
-    private final String url = "https://www.infoq.cn/feed.xml";
+    private static String url = "https://www.infoq.cn/feed.xml";
+
+    //定时器
+    private ScheduledExecutorService executorService;
 
     /**
      * 根据rss地址获取并将符合的数据封装到list中
@@ -81,9 +91,52 @@ public class InfoQPush {
         return infoqs;
     }
 
+    /**
+     * 定时推送（并发）
+     */
+    public void schedule() {
+        executorService = new ScheduledThreadPoolExecutor(1,
+                new BasicThreadFactory.Builder().namingPattern("example-schedule-pool-%d").daemon(true).build());
+//        executorService = Executors.newScheduledThreadPool(1);
+
+        long initialDelay = DateUtil.getSpecifiedMS(DateUtil.getTomSpecifiedTime("08:00:00"));//初始延迟
+        System.out.println(initialDelay);
+        initialDelay = 0;
+        long period = 1000 * 10;//间隔延迟
+        TimeUnit unit = TimeUnit.MILLISECONDS;//时间单位
+
+        Future future = executorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                log.info(String.format("=====线程%s开始工作=====", Thread.currentThread().getName()));
+            }
+        }, initialDelay, period, unit);
+
+        try {
+            future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        //executorService关闭模板
+        /*try {
+            executorService.shutdown();
+            if (!executorService.awaitTermination(1000 * 10, TimeUnit.MILLISECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("awaitTermination interrupted: " + e);
+            executorService.shutdownNow();
+        }*/
+    }
+
     public static void main(String[] args) {
         InfoQPush push = new InfoQPush();
-        push.search();
+//        push.search();
+
+        push.schedule();
     }
 
 }
