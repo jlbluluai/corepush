@@ -30,13 +30,13 @@ import java.util.concurrent.*;
 public class InfoQPush {
 
     // 是否启用InfoQ推送的开关（未实现）
-    private static boolean flag = true;
+    public static boolean flag = true;
 
     // InfoQ推送需要读取的文件目录的统一地址
-    private static String filepath = "file/infoq/";
+    public static String filepath = "file/infoq/";
 
     //RSS订阅的地址
-    private static String url = "https://www.infoq.cn/feed.xml";
+    public static String url = "https://www.infoq.cn/feed.xml";
 
     //定时器
     private ScheduledExecutorService executorService;
@@ -92,6 +92,11 @@ public class InfoQPush {
     }
 
     /**
+     * 单点推送
+     */
+
+
+    /**
      * 定时推送（并发）
      */
     public void schedule() {
@@ -132,11 +137,15 @@ public class InfoQPush {
         }*/
     }
 
+    public void sys(){
+        System.out.println(flag);
+    }
+
     public static void main(String[] args) {
         InfoQPush push = new InfoQPush();
 //        push.search();
 
-        push.schedule();
+//        push.schedule();
     }
 
 }
