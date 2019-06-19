@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.function.Function;
 
 /**
  * InfoQ RSS订阅推送
@@ -137,7 +138,7 @@ public class InfoQPush {
         }*/
     }
 
-    public void sys(){
+    public void sys() {
         System.out.println(flag);
     }
 
@@ -146,6 +147,7 @@ public class InfoQPush {
 //        push.search();
 
 //        push.schedule();
+        Function function;
     }
 
 }

@@ -21,7 +21,7 @@ public class ExecutorConfig {
 		executor.setCorePoolSize(5);
 		executor.setMaxPoolSize(5);
 		executor.setQueueCapacity(99999);
-		executor.setThreadNamePrefix("weather-service-");
+		executor.setThreadNamePrefix("executor-service-");
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		executor.initialize();
 		return executor;

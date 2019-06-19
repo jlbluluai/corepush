@@ -14,7 +14,8 @@
 	<modules>
 		<module>corepush-base</module>
 		<module>corepush-execute</module>
-	</modules>
+        <module>corepush-dao</module>
+    </modules>
 
 	<properties>
 		<java.version>1.8</java.version>
