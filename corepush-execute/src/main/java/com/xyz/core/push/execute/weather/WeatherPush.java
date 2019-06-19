@@ -62,7 +62,7 @@ public class WeatherPush {
         weather.setCity(city);
         weather.setName(name);
 
-        return weather;
+        return weather; 
     }
 
     /**
